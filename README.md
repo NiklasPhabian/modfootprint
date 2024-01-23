@@ -44,16 +44,24 @@ https://www.ibm.com/docs/en/db2-for-zos/11?topic=systems-coordinate-syntax
 
 ```bash
 gdal_translate "MOD09GA.A2021309.h08v05.061.2021311034604.hdf":"MODIS_Grid_500m_2D":"sur_refl_b01_1" a.tif
-```+
+```
 
 "HDF4_EOS:EOS_SWATH:"MOD09.A2021309.1825.006.2021311021513.hdf":""MODIS SWATH TYPE L2"":""500m Surface Reflectance Band 1"""
 
 ### GDAL can read EOS GRID
 
-"HDF4_EOS:EOS_GRID:"MOD09GA.A2021309.h08v05.061.2021311034604.hdf":MODIS_Grid_500m_2D:sur_refl_b01_1"
-
-
-## MErging data
 ```bash
-gdal_merge.py -separate -ot int16 -of GTiff -o rgb.tif --optfile optfile.txt
+gdal_translate "HDF4_EOS:EOS_GRID:MOD09GA.A2021309.h08v05.061.2021311034604.hdf:MODIS_Grid_500m_2D:sur_refl_b01_1" tmp_1.tif
+gdal_translate "HDF4_EOS:EOS_GRID:MOD09GA.A2021309.h08v05.061.2021311034604.hdf:MODIS_Grid_500m_2D:sur_refl_b02_1" tmp_2.tif
+gdal_translate "HDF4_EOS:EOS_GRID:MOD09GA.A2021309.h08v05.061.2021311034604.hdf:MODIS_Grid_500m_2D:sur_refl_b03_1" tmp_3.tif
+gdal_translate "HDF4_EOS:EOS_GRID:MOD09GA.A2021309.h08v05.061.2021311034604.hdf:MODIS_Grid_500m_2D:sur_refl_b04_1" tmp_4.tif
+gdal_translate "HDF4_EOS:EOS_GRID:MOD09GA.A2021309.h08v05.061.2021311034604.hdf:MODIS_Grid_500m_2D:sur_refl_b05_1" tmp_5.tif
+gdal_translate "HDF4_EOS:EOS_GRID:MOD09GA.A2021309.h08v05.061.2021311034604.hdf:MODIS_Grid_500m_2D:sur_refl_b06_1" tmp_6.tif
+gdal_translate "HDF4_EOS:EOS_GRID:MOD09GA.A2021309.h08v05.061.2021311034604.hdf:MODIS_Grid_500m_2D:sur_refl_b07_1" tmp_7.tif
+
+gdal_merge.py -separate -ot int16 -of GTiff -o rgb.tif tmp_*.tif
 ```
+
+
+
+https://github.com/yosukefk/modis_tile/blob/master/modis_tile.py
